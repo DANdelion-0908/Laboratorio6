@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  app:
+    build: 
+      context: ./
+      dockerfile: dockerfiles/app/Dockerfile
+    ports:
+      - "22217:3000"
+    volumes:
+      - .:/app
+    depends_on:
+      - appdatabase
+  appdatabase:
+    build:
+      context: ./
+      dockerfile: dockerfiles/mysql/Dockerfile
+    ports:
+      - "5069:3306"
+    environment:
+      MYSQL_DATABASE: games_db
+      MYSQL_USER: dandelionWriter
+      MYSQL_PASSWORD: 0908072244!
+      MYSQL_ROOT_PASSWORD: 0908072244X!
+    volumes:
+      - ./mysql-data:/var/lib/mysql
