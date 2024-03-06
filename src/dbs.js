@@ -5,9 +5,9 @@ export async function getAllPosts() {
     return rows
 }
 
-export async function createPost(title, picture, text, reasons) {
-    const [result] = await conn.query("INSERT INTO blog_posts (title, picture, content, reasons) VALUES (?, ?, ?, ?);",
-     [title, picture, text, reasons])
+export async function createPost(title, picture, content, reasons) {
+    const [result] = await conn.query("INSERT INTO blog_posts (title, picture, vision, favorites) VALUES (?, ?, ?, ?);",
+     [title, picture, content, reasons])
     return result
 }
 
@@ -21,8 +21,8 @@ export async function getPost(id) {
     return result
 }
 
-export async function putPost(id, title, content) {
-    const [result] = await conn.query("UPDATE blog_posts SET content = (?), title = (?) WHERE id = (?);",
-     [content, title, id])
+export async function putPost(id, title, content, picture) {
+    const [result] = await conn.query("UPDATE blog_posts SET vision = (?), title = (?), picture = (?) WHERE id = (?);",
+     [content, title, picture, id])
     return result
 }
