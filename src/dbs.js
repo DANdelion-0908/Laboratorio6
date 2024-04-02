@@ -1,28 +1,28 @@
 import conn from "./conn.js"
 
 export async function getAllPosts() {
-    const [rows] = await conn.query("SELECT * FROM blog_posts;")
+    const [rows] = await conn.query("SELECT * FROM posts;")
     return rows
 }
 
-export async function createPost(title, picture, content, reasons) {
-    const [result] = await conn.query("INSERT INTO blog_posts (title, picture, vision, favorites) VALUES (?, ?, ?, ?);",
-     [title, picture, content, reasons])
+export async function createPost(title, picture, description, points) {
+    const [result] = await conn.query("INSERT INTO posts (title, picture, post_description, points) VALUES (?, ?, ?, ?);",
+     [title, picture, description, points])
     return result
 }
 
 export async function deletePost(id) {
-    await conn.query("DELETE FROM blog_posts WHERE id = (?);", [id])
+    await conn.query("DELETE FROM posts WHERE id = (?);", [id])
 }
 
 export async function getPost(id) {
-    const[result] = await conn.query("SELECT * FROM blog_posts WHERE id = (?)",
+    const[result] = await conn.query("SELECT * FROM posts WHERE id = (?)",
      [id])
     return result
 }
 
-export async function putPost(id, title, content, picture) {
-    const [result] = await conn.query("UPDATE blog_posts SET vision = (?), title = (?), picture = (?) WHERE id = (?);",
-     [content, title, picture, id])
+export async function putPost(id, title, picture, post_description, points) {
+    const [result] = await conn.query("UPDATE posts SET title = (?), picture = (?), post_description = (?), points = (?) WHERE id = (?);",
+     [title, picture, post_description, points, id])
     return result
 }

@@ -1,15 +1,20 @@
 import express from 'express'
 import { getAllPosts, createPost, deletePost, getPost, putPost } from './dbs.js'
+import cors from 'cors'
 
 const app = express()
 const port = 3000
 app.use(express.json())
 
+app.use(cors({
+  origin: "http://localhost:8080"
+}))
+
 app.post('/posts', async (req, res) => {
-  const { title, picture, content, reasons } = req.body
+  const { title, picture, post_description, points } = req.body
 
   try {
-    const post = await createPost(title, picture, content, reasons)
+    const post = await createPost(title, picture, post_description, points)
     res.status(201).json(post)
     
   } catch (error) {
@@ -29,11 +34,11 @@ app.get('/posts', async (req, res) => {
 })
 
 app.put('/posts/:postId', async (req, res) => {
-  const { postId } = req.params;
-  const { title, content, picture, reasons } = req.body;
+  const {postId} = req.params;
+  const {title, picture, post_description, points} = req.body;
 
   try {
-    const post = await putPost(postId, title, content, picture, reasons);
+    const post = await putPost(postId, title, picture, post_description, points);
     res.status(201).json(post);
   } catch (error) {
     console.error(error);
@@ -42,7 +47,7 @@ app.put('/posts/:postId', async (req, res) => {
 });
 
 app.delete('/posts/:postID', async (req, res) => {
-  const { postID } = req.params
+  const {postID} = req.params
   try {
     await deletePost(postID)
     res.status(204).send("Eliminado con éxito.")
