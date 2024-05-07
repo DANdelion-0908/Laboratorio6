@@ -1,20 +1,20 @@
-version: '3.8'
-
 services:
   app:
-    build: 
+    build:
       context: ./
       dockerfile: dockerfiles/app/Dockerfile
     ports:
-      - "22217:3000"
+      - "2048:3000"
     volumes:
-      - .:/app
+      - .:/src
+    restart: always
     depends_on:
-      - appdatabase
-  appdatabase:
+      - database
+
+  database:
     build:
       context: ./
-      dockerfile: dockerfiles/mysql/Dockerfile
+      dockerfile: dockerfiles/database/Dockerfile
     ports:
       - "5069:3306"
     environment:
